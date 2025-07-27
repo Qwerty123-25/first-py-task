@@ -7,3 +7,27 @@
 - Python 3.12
 - Poetry (менеджер зависимостей)
 - Библиотека `requests`
+
+## Установка:
+
+#1. Установи Poetry:
+
+    ```bash
+    pip install poetry
+
+
+    ```
+
+#2.Установи зависимости:
+
+    ```bash
+    poetry install
+    ```
+
+##Запуск:
+
+```bash
+    cd src\first_py_task\
+    poetry run main.py
+
+```
