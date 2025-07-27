@@ -8,14 +8,11 @@ headers = {'User-Agent': 'MyPythonApp/1.0','user-agent':
 
 def get_response(url: str=url, headers: dict=headers) ->requests.Response:
     try:
-        r = requests.get(url, headers)
-        if r.status_code==200:
-            print(f"successful: {r.status_code}")
-            return r
-    except Exception as err:
-        print(f"Unexpected {err=}, {type(err)=}")
-    except ConnectionError:
-        print("Connection error")
+        response = requests.get(url, headers)
+        response.raise_for_status()
+        return response
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка запроса: {e}")
     
 
 def info_response(resp: requests.Response ) ->None:
@@ -25,10 +22,8 @@ def info_response(resp: requests.Response ) ->None:
 def print_json_response(resp: requests.Response) -> None:
     if 'application/json' in resp.headers['content-type'].lower():
         try:
-            data = resp.json()
-            print(f"key{'':30} \t \tvalue")
-            for k, v in data.items():
-                print(f"{k:30.20} ===> \t{v}")
+           for k, v in resp.headers.items():
+               print(f"{k:30} ==>\t {v}")
         except ValueError:
             print("Response contet invalid JSON")
     else:
